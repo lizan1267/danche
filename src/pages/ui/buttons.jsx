@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 
-export default class App extends Component {
+export default class Buttons extends Component {
     render() {
         return (
             <div>
-                {this.props.children}
+                this is buttons page
             </div>
         )
     }
