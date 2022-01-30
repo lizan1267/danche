@@ -9,9 +9,11 @@
     .main{
         height:calc(100vh);
         background-color: @colorL;
+        overflow: auto;   //实现左侧菜单栏不动，只有右侧滚动
     }
     .content{
         position:relative;
         padding:20px;
+        display: block;   //自己加的
     }
 }
