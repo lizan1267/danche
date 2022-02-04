@@ -4,7 +4,7 @@ import { PlusOutlined,EditOutlined,DeleteOutlined } from '@ant-design/icons';
 import './ui.less';
 
 const { TabPane } = Tabs;
-export default class Ttabs extends Component {
+export default class tabs extends Component {
 
     //切换页签时显示的message
     callback=(key)=>{
