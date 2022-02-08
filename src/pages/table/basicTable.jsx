@@ -103,7 +103,7 @@ export default class BasicTable extends Component {
                         bordered
                         pagination={false}
                         columns={columns}
-                        dataSource={this.state.dataSource2}
+                        dataSource={this.state.dataSource2} 
                     />
                 </Card>
             </div>
