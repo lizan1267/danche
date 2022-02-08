@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import { Card,Table } from 'antd';
 
 export default class BasicTable extends Component {
 
-    state={}
+    state={
+        dataSource2:[]
+    }
 
     componentDidMount(){
         const dataSource=[
@@ -39,6 +42,21 @@ export default class BasicTable extends Component {
         this.setState({
             dataSource
         })
+        this.request();
+    }
+
+    request=()=>{
+        // let _this=this;
+        axios.get('https://www.fastmock.site/mock/0d3e0fa5f65bb4cb711295a72e204c65/mockapi/table/list')
+        .then(res=>{
+            if(res.status===200 && res.data.code==="0"){
+                console.log(1)
+                this.setState({
+                    dataSource2:res.data.result.list
+                })
+            }
+            console.log(res)
+        })
     }
 
     render() {
@@ -71,12 +89,21 @@ export default class BasicTable extends Component {
         ]
         return (
             <div>
-                <Card title="基础表格">
+                <Card title="基础表格" style={{margin:"10px 0"}}>
                     <Table 
                         bordered
                         pagination={false}
                         columns={columns}
                         dataSource={this.state.dataSource}
+                    />
+                </Card>
+
+                <Card title="动态数据渲染表格">
+                    <Table 
+                        bordered
+                        pagination={false}
+                        columns={columns}
+                        dataSource={this.state.dataSource2}
                     />
                 </Card>
             </div>
