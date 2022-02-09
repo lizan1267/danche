@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card,Button,Table,Form,Select } from 'antd';
+import { Card,Button,Table,Form,Select,Modal, message } from 'antd';
 import axios from '../../axios';
 import Utils from '../../utils/utils';
 
@@ -8,7 +8,10 @@ const { Option }=Select;
 
 export default class City extends Component {
 
-    state={}
+    state={
+        list:[],
+        isShowOpenCity:false
+    }
 
     params={
         page:1
@@ -44,7 +47,29 @@ export default class City extends Component {
 
     //开通城市按钮
     handleOpenCity=()=>{
+        this.setState({
+            isShowOpenCity:true
+        })
+    }
 
+    //城市开通提交
+    handleSubmit=()=>{
+        let cityInfo=this.myForm.myForm.getFieldsValue();
+        console.log(cityInfo);
+        axios.ajax({
+            url:"/city/open",
+            data:{
+                params:cityInfo
+            }
+        }).then(res=>{
+            if(res.code==="0"){
+                message.success("开通成功");
+                this.setState({
+                    isShowOpenCity:false
+                })
+                this.requestList();
+            }
+        })
     }
 
     render() {
@@ -58,10 +83,16 @@ export default class City extends Component {
                 dataIndex:"name"
             },{
                 title:"用车模式",
-                dataIndex:"mode"
+                dataIndex:"mode",
+                render(mode){
+                    return mode===1?"停车点":"禁停区";
+                }
             },{
                 title:"营运模式",
-                dataIndex:"op_mode"
+                dataIndex:"op_mode",
+                render(op_mode){
+                    return op_mode===1?"自营":"加盟";
+                }
             },{
                 title:"授权加盟商",
                 dataIndex:"franchisee_name"
@@ -75,7 +106,11 @@ export default class City extends Component {
                 }
             },{
                 title:"城市开通时间",
-                dataIndex:"open_time"
+                dataIndex:"open_time",
+            },{
+                title:"操作时间",
+                dataIndex:"update_time",
+                render:Utils.formateDate
             },{
                 title:"操作人",
                 dataIndex:"sys_user_name"
@@ -101,12 +136,26 @@ export default class City extends Component {
                         pagination={this.state.pagination}
                     />
                 </div>
+
+                {/* 开通城市的弹框 */}
+                <Modal
+                    title="开通城市"
+                    visible={this.state.isShowOpenCity}
+                    onCancel={()=>{
+                        this.setState({
+                            isShowOpenCity:false
+                        })
+                    }}
+                    onOk={this.handleSubmit}
+                >
+                    <OpenCityForm ref={c=>this.myForm=c} />
+                </Modal>
             </div>
         )
     }
 }
 
-
+// 查询部分的表单
 class FilterForm extends Component{
     render(){
         return (
@@ -166,6 +215,65 @@ class FilterForm extends Component{
                 <FormItem>
                     <Button type="primary" style={{margin:"0 20px"}}>查询</Button>
                     <Button>重置</Button>
+                </FormItem>
+            </Form>
+        )
+    }
+}
+
+// 开通城市的表单
+class OpenCityForm extends Component{
+    render(){
+        const formItemLayout={
+            labelCol:{
+                span:5
+            },
+            wrapperCol:{
+                span:19
+            }
+        }
+        return (
+            <Form 
+                ref={c=>this.myForm=c}
+                layout="horizontal"
+                initialValues={
+                    {
+                        city_id:"1",
+                        op_mode:"1",
+                        use_mode:"1"
+                    }
+                }
+                >
+                <FormItem 
+                    label="选择城市" 
+                    {...formItemLayout}
+                    name="city_id"
+                >
+                    <Select style={{width:100}}>
+                        <Option value="">全部</Option>
+                        <Option value="1">北京市</Option>
+                        <Option value="2">天津市</Option>
+                    </Select>
+                </FormItem>
+                <FormItem 
+                    label="营运模式" 
+                    {...formItemLayout}
+                    name="op_mode"
+                >
+                    <Select style={{width:100}}>
+                        <Option value="1">自营</Option>
+                        <Option value="2">加盟</Option>
+                    </Select>
+                </FormItem>
+                <FormItem 
+                    label="用车模式" 
+                    {...formItemLayout}
+                    name="use_mode"
+                >
+                    <Select style={{width:100}}>
+                        <Option value="1">指定停车点</Option>
+                        <Option value="2">禁停区</Option>
+                    </Select>
                 </FormItem>
             </Form>
         )
