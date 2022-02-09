@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import axios from '../../axios';
 import { Card,Table,Modal, Button,message,Badge } from 'antd';
-import utils from '../../utils/utils';
 
 export default class highTable extends Component {
     
