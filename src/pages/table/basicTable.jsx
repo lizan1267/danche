@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import axios from '../../axios';
 import { Card,Table } from 'antd';
 
 export default class BasicTable extends Component {
@@ -46,16 +46,20 @@ export default class BasicTable extends Component {
     }
 
     request=()=>{
-        // let _this=this;
-        axios.get('https://www.fastmock.site/mock/0d3e0fa5f65bb4cb711295a72e204c65/mockapi/table/list')
+        axios.ajax({
+            url:"/table/list",
+            data:{
+                params:{
+                    page:1
+                }
+            }
+        })
         .then(res=>{
-            if(res.status===200 && res.data.code==="0"){
-                console.log(1)
+            if(res.code==="0"){
                 this.setState({
-                    dataSource2:res.data.result.list
+                    dataSource2:res.result.list
                 })
             }
-            console.log(res)
         })
     }
 
@@ -69,13 +73,40 @@ export default class BasicTable extends Component {
                 dataIndex:"userName"
             },{
                 title:"性别",
-                dataIndex:"sex"
+                dataIndex:"sex",
+                render(sex){
+                    return sex===1?"男":"女"
+                }
             },{
                 title:"状态",
-                dataIndex:"state"
+                dataIndex:"state",
+                render(state){
+                    let config={
+                        "1":"咸鱼一条",
+                        "2":"风华浪子",
+                        "3":"北大才子",
+                        "4":"百度FE",
+                        "5":"创业者"
+                    }
+                    return config[state];
+                }
             },{
                 title:"爱好",
-                dataIndex:"interest"
+                dataIndex:"interest",
+                render(interest){  //这个参数可以随便写，不一定非得和上边一样
+                    let config={
+                        "1":"游泳",
+                        "2":"篮球",
+                        "3":"足球",
+                        "4":"跑步",
+                        "5":"爬山",
+                        "6":"骑行",
+                        "7":"桌球",
+                        "8":"麦霸",
+                        "9":"滑冰"
+                    }
+                    return config[interest];
+                }
             },{
                 title:"生日",
                 dataIndex:"birthday"
@@ -98,7 +129,7 @@ export default class BasicTable extends Component {
                     />
                 </Card>
 
-                <Card title="动态数据渲染表格">
+                <Card title="动态数据渲染表格-Mock">
                     <Table 
                         bordered
                         pagination={false}
@@ -106,6 +137,7 @@ export default class BasicTable extends Component {
                         dataSource={this.state.dataSource2} 
                     />
                 </Card>
+
             </div>
         )
     }
