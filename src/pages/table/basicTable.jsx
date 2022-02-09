@@ -53,6 +53,7 @@ export default class BasicTable extends Component {
         this.request();
     }
 
+    //动态获取mock数据
     request=()=>{
         let _this=this;
         axios.ajax({
