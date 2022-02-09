@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from '../../axios';
-import { Card,Table,Modal } from 'antd';
+import { Card,Table,Modal, Button,message } from 'antd';
 
 export default class BasicTable extends Component {
 
@@ -63,7 +63,9 @@ export default class BasicTable extends Component {
                     item.key=index;
                 })
                 this.setState({
-                    dataSource2:res.result.list
+                    dataSource2:res.result.list,
+                    selectedRowKeys:[],
+                    selectedRows:null
                 })
             }
         })
@@ -78,6 +80,22 @@ export default class BasicTable extends Component {
         this.setState({
             selectedRowKeys:selectKey,
             selectedItem:record
+        })
+    }
+    //多选执行删除
+    handleDelete=()=>{
+        let rows=this.state.selectedRows;
+        let ids=[];
+        rows.map(item=>{
+            ids.push(item.id);
+        })
+        Modal.confirm({
+            title:"删除提示",
+            content:`您确定要删除这些数据吗？ ${ids.join(',')}`,
+            onOk:()=>{
+                message.success("删除成功");
+                this.request();
+            }
         })
     }
 
@@ -138,9 +156,19 @@ export default class BasicTable extends Component {
         ]
         
         const { selectedRowKeys }=this.state;
-        const rowSelection={
+        const rowSelection={   //单选
             type:"radio",
             selectedRowKeys
+        }
+        const rowCheckSelection={  //多选
+            type:"checkbox",
+            selectedRowKeys,
+            onChange:(selectedRowKeys,selectedRows)=>{
+                this.setState({
+                    selectedRowKeys,
+                    selectedRows
+                })
+            }
         }
         return (
             <div>
@@ -166,6 +194,26 @@ export default class BasicTable extends Component {
                     <Table 
                         bordered
                         rowSelection={rowSelection}
+                        onRow={(record,index) => {
+                            return {
+                              onClick:()=>{
+                                this.onRowClick(record,index)
+                              }
+                            };
+                          }}
+                        pagination={false}
+                        columns={columns}
+                        dataSource={this.state.dataSource2} 
+                    />
+                </Card>
+
+                <Card title="Mock-多选">
+                    <div style={{marginBottom:10}}>
+                        <Button onClick={this.handleDelete}>删除</Button>
+                    </div>
+                    <Table 
+                        bordered
+                        rowSelection={rowCheckSelection}
                         onRow={(record,index) => {
                             return {
                               onClick:()=>{
