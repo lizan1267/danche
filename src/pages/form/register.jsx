@@ -30,6 +30,7 @@ export default class register extends Component {
     handleChange = info => {
         if (info.file.status === 'uploading') {
           this.setState({ loading: true });
+          console.log(3)
           return;
         }
         if (info.file.status === 'done') {

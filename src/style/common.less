@@ -1,6 +1,17 @@
 @import './default.less';
 @import './loading.less';
 
+ul,li{
+    list-style:none;
+}
+.clearfix{
+    &::after{
+        content:' ';
+        clear:both;
+        display:block;
+        visibility: hidden;
+    }
+}
 .container{
     .nav-left{
         background-color: @colorR;
@@ -17,6 +28,12 @@
         padding:20px;
         display: block;   //自己加的
     }
+}
+
+.content{
+    position:relative;
+    padding:20px;
+    display: block;   //自己加的
 }
 
 .content-wrap{

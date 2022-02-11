@@ -1,11 +1,24 @@
 @import '../../style/default.less';
 .header{
     background-color:@colorM;
+    width:100%;  //自己在9-3加的，不然common.jsx不行
     .header-top{
         height:60px;
         line-height: 60px;
         padding:0 20px;
         text-align: right;
+        .logo{
+            line-height:60px;
+            text-align:left;
+            font-size: 18px;
+            img{
+                height:40px;
+                vertical-align: middle;
+            }
+            span{
+                margin-left:5px;
+            }
+        }
         a{
             margin-left:40px;
         }
@@ -35,5 +48,12 @@
                 margin-right: 10px;
             }
         }
+    }
+}
+
+.simple-page{
+    .header-top{
+        background:#1890ff;
+        color:@colorM;
     }
 }

@@ -17,6 +17,9 @@ import FormRegister from './pages/form/register';
 import BasicTable from './pages/table/basicTable';
 import HighTable from './pages/table/highTable';
 import City from './pages/city';
+import Order from './pages/order';
+import Common from './common';
+import OrderDetail from './pages/order/detail';
 import NoMatch from './pages/nomatch';
 
 export default class IRouter extends Component {
@@ -25,7 +28,7 @@ export default class IRouter extends Component {
             <HashRouter>
                 <App>
                     <Route path="/login" component={Login} />
-                    <Route path="/admin" component={()=>
+                    <Route path="/admin" render={()=>
                         <Admin>
                             <Switch>
                                 <Route path="/admin/home" component={Home} />
@@ -42,9 +45,15 @@ export default class IRouter extends Component {
                                 <Route path="/admin/table/basic" component={BasicTable} />
                                 <Route path="/admin/table/high" component={HighTable} />
                                 <Route path="/admin/city" component={City} />
+                                <Route path="/admin/order" component={Order} />
                                 <Route component={NoMatch} />
                             </Switch>
                         </Admin>
+                    } />
+                    <Route path="/common" render={()=>
+                        <Common>
+                            <Route path="/common/order/detail/:orderId" component={OrderDetail} />
+                        </Common>
                     } />
                     <Route path="/order/detail" component={Login} />
                 </App>
