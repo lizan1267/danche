@@ -26,7 +26,7 @@ export default class Header extends Component {
     getWeatherAPIDate(){
         axios.get("https://devapi.qweather.com/v7/weather/now?location=101090201&key=ab5bcf08250f47ab8a4fd1745cd58f66")
         .then((res)=>{
-            console.log(res)
+            // console.log(res)
             let data=res.data;
             data=data.now.text;
             if(res.data.code==="200"){

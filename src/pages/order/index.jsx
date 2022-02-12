@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Card,Button,Table,Form,Select,Modal, message, DatePicker } from 'antd';
+import { Card,Button,Table,Form,Modal, message } from 'antd';
 import axios from '../../axios';
 import Utils from '../../utils/utils';
+import BaseForm from '../../components/BaseForm';
 
 const FormItem=Form.Item;
-const { Option }=Select;
 export default class Order extends Component {
 
     state={
@@ -15,7 +15,36 @@ export default class Order extends Component {
         page:1
     }
 
+    formList=[
+        {
+            type:"SELECT",
+            label:"城市",
+            field:"city",
+            placeholder:"全部",
+            initialValue:"0",
+            width:80,
+            list:[{id:"0",name:"全部"},{id:"1",name:"北京"},{id:"2",name:"天津"},{id:"3",name:"上海"}]
+        },{
+            type:"时间查询",
+            field:"time_query",
+            initialValue:"",
+        },{
+            type:"SELECT",
+            label:"订单状态",
+            field:"order_status",
+            placeholder:"全部",
+            initialValue:"0",
+            width:100,
+            list:[{id:"0",name:"全部"},{id:"1",name:"进行中"},{id:"2",name:"结束行程"}]
+        }
+    ]
+
     componentDidMount(){
+        this.requestList();
+    }
+    //BaseForm
+    handleFilter=(params)=>{
+        this.params=params;
         this.requestList();
     }
 
@@ -25,7 +54,7 @@ export default class Order extends Component {
             url:"/order/list",
             data:{
                 params:{
-                    page:this.params.page
+                    page:this.params
                 }
             }
         }).then(res=>{
@@ -175,7 +204,7 @@ export default class Order extends Component {
             <div>
                 {/* 第一部分：查询 */}
                 <Card>
-                    <FilterForm />
+                    <BaseForm formList={this.formList} filterSubmit={this.handleFilter} />
                 </Card>
 
                 {/* 第二部分：表格部分 */}
@@ -228,66 +257,6 @@ export default class Order extends Component {
                     </Form>
                 </Modal>
             </div>
-        )
-    }
-}
-
-// 查询部分的表单
-class FilterForm extends Component{
-    render(){
-        return (
-            <Form layout='inline'>
-
-                {/* 城市 */}
-                <FormItem 
-                    label="城市"
-                    name="city_id"
-                >
-                    {/* 下拉框 */}
-                    <Select style={{width:100}} placeholder="全部">
-                        <Option value="">全部</Option>
-                        <Option value="1">北京市</Option>
-                        <Option value="2">天津市</Option>
-                        <Option value="3">上海市</Option>
-                    </Select>
-                </FormItem>
-
-                {/* 订单时间 */}
-                <FormItem
-                    name="start_time"
-                >
-                    <DatePicker placeholder="选择开始时间"
-                        showTime format="YYYY-MM-DD HH:mm:ss"
-                    />
-                </FormItem>
-                <FormItem
-                    label="~"
-                    colon={false}
-                    name="end_time"
-                >
-                    <DatePicker placeholder="选择结束时间"
-                        showTime format="YYYY-MM-DD HH:mm:ss"
-                    />
-                </FormItem>
-
-                {/* 订单状态 */}
-                <FormItem 
-                    label="订单状态"
-                    name="auth_status"
-                >
-                    <Select style={{width:100}} placeholder="全部">
-                        <Option value="">全部</Option>
-                        <Option value="1">进行中</Option>
-                        <Option value="2">结束行程</Option>
-                    </Select>
-                </FormItem>
-
-                {/* 操作按钮 */}
-                <FormItem>
-                    <Button type="primary" style={{margin:"0 20px"}}>查询</Button>
-                    <Button>重置</Button>
-                </FormItem>
-            </Form>
         )
     }
 }
