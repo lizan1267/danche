@@ -1,7 +1,34 @@
 import JsonP from 'jsonp';
 import axios from 'axios';
 import { Modal } from 'antd';
-export default class Axios{  
+import Utils from './../utils/utils';
+export default class Axios{ 
+    //请求列表
+    static requestList(_this,url,params,isMock){
+        var data={
+            params:params,
+            isMock
+        }
+        this.ajax({
+            url,
+            data
+        }).then(data=>{
+            if(data && data.result){
+                let list=data.result.item_list.map((item,index)=>{
+                    item.key=index;
+                    return item;
+                });
+                _this.setState({
+                    list,
+                    pagination:Utils.pagination(data,current=>{
+                        _this.params.page=current;
+                        _this.requestList();
+                    })
+                })
+            }
+        })
+    }
+
     static jsonp(options){
         new Promise((resolve,reject)=>{
             JsonP(options.url,{
@@ -15,13 +42,20 @@ export default class Axios{
             })
         })
     }
+
     static ajax(options){
         let loading;
         if(options.data && options.data.isShowLoading !== false){
             loading=document.getElementById("ajaxLoading");
             loading.style.display="block";
         }
-        let baseApi="https://www.fastmock.site/mock/0d3e0fa5f65bb4cb711295a72e204c65/mockapi";
+        let baseApi="";
+        //判断是否使用mock数据
+        if(options.isMock){
+            baseApi="https://www.fastmock.site/mock/0d3e0fa5f65bb4cb711295a72e204c65/mockapi";
+        }else{
+            baseApi="https://www.fastmock.site/mock/0d3e0fa5f65bb4cb711295a72e204c65/mockapi";
+        } 
         return new Promise((resolve,reject)=>{
             axios({
                 url:options.url,
