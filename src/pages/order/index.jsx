@@ -3,6 +3,7 @@ import { Card,Button,Table,Form,Modal, message } from 'antd';
 import axios from '../../axios';
 import Utils from '../../utils/utils';
 import BaseForm from '../../components/BaseForm';
+import ETable from '../../components/ETable';
 
 const FormItem=Form.Item;
 export default class Order extends Component {
@@ -122,14 +123,7 @@ export default class Order extends Component {
             }
         })
     }
-    //单击行
-    onRowClick=(record,index)=>{
-        let selectKey=[index];
-        this.setState({
-            selectedRowKeys:selectKey,
-            selectedItem:record
-        })
-    }
+    
     //单击订单详情页面
     openOrderDetail=()=>{
         let item=this.state.selectedItem;
@@ -195,11 +189,7 @@ export default class Order extends Component {
             }
         }
 
-        const { selectedRowKeys }=this.state;
-        const rowSelection={   //单选
-            type:"radio",
-            selectedRowKeys
-        }
+        
 
         return (
             <div>
@@ -214,19 +204,15 @@ export default class Order extends Component {
                     <Button type="primary" style={{marginLeft:10}} onClick={this.handleConfirm}>结束订单</Button>
                 </Card>
                 <div className="content-wrap">
-                    <Table
-                        bordered
+                    <ETable 
+                        updateSelectedItem={Utils.updateSelectedItem.bind(this)}
                         columns={columns}
                         dataSource={this.state.list}
+                        selectedRowKeys={this.state.selectedRowKeys}
+                        selectedIds={this.state.selectedIds}
+                        selectedItem={this.state.selectedItem}
                         pagination={this.state.pagination}
-                        rowSelection={rowSelection}
-                        onRow={(record,index) => {
-                            return {
-                              onClick:()=>{
-                                this.onRowClick(record,index)
-                              }
-                            };
-                        }}
+                        rowSelection="checkbox"
                     />
                 </div>
 

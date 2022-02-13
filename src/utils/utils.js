@@ -35,5 +35,22 @@ export default{
             options.push(<Option value={item.id} key={item.id}>{item.name}</Option>)
         })
         return options;
+    },
+
+    //selectedRowKeys封装
+    updateSelectedItem(selectedRowKeys,selectedItem,selectedIds){
+        if(selectedIds){
+            this.setState({
+                selectedRowKeys,
+                selectedItem,  //选中的那一行
+                selectedIds
+            })
+        }else{
+            this.setState({
+                selectedRowKeys,
+                selectedItem
+            })
+        }
+        
     }
 }
