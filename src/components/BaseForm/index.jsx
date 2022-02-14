@@ -83,6 +83,14 @@ export default class FilterForm extends Component {
                         </Checkbox>
                     </FormItem>
                     formItemList.push(CHECKBOX);
+                }else if(item.type==="城市"){
+                    const city=
+                    <FormItem label="城市" key={field} name="city" initialValue="0">
+                        <Select style={{width:80}} placeholder={placeholder}>
+                            {utils.getOptionList([{id:"0",name:"全部"},{id:"1",name:"北京"},{id:"2",name:"上海"},{id:"3",name:"天津"},{id:"4",name:"杭州"}])}
+                        </Select>
+                    </FormItem>
+                    formItemList.push(city);
                 }
             })
         }
