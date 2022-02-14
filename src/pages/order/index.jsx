@@ -51,28 +51,9 @@ export default class Order extends Component {
 
     requestList=()=>{
         let _this=this;
-        axios.requestList(this,"/order/list",this.params,true)
-        // axios.ajax({
-        //     url:"/order/list",
-        //     data:{
-        //         params:{
-        //             page:this.params
-        //         }
-        //     }
-        // }).then(res=>{
-        //     let list=res.result.item_list.map((item,index)=>{
-        //         item.key=index;
-        //         return item;
-        //     });
-        //     this.setState({
-        //         list,
-        //         pagination:Utils.pagination(res,current=>{
-        //             _this.params.page=current;
-        //             _this.requestList();
-        //         })
-        //     })
-        // })
+        axios.requestList(this,"/order/list",this.params,true);
     }
+
     //单击结束订单按钮
     handleConfirm=()=>{
         //只有选择具体某一条订单，才能点开结束订单
@@ -140,6 +121,7 @@ export default class Order extends Component {
 
     render() {
 
+        //表头
         const columns=[
             {
                 title:"订单编号",
@@ -212,7 +194,8 @@ export default class Order extends Component {
                         selectedIds={this.state.selectedIds}
                         selectedItem={this.state.selectedItem}
                         pagination={this.state.pagination}
-                        rowSelection="checkbox"
+                        // rowSelection="checkbox"
+                        rowSelection
                     />
                 </div>
 

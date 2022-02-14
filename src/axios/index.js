@@ -14,6 +14,7 @@ export default class Axios{
             data
         }).then(data=>{
             if(data && data.result){
+                // console.log("data",data)
                 let list=data.result.item_list.map((item,index)=>{
                     item.key=index;
                     return item;

@@ -12,12 +12,12 @@ export default class ETable extends Component {
             let selectedIds=this.props.selectedIds;
             if(selectedIds){
                 const i=selectedIds.indexOf(record.id);
-                console.log("i",i)
+                // console.log("i",i)
                 if(i===-1){
                     selectedIds.push(record.id);
                     selectedRowKeys.push(index);
                     selectedItem.push(record);
-                    console.log(selectedIds,selectedRowKeys,selectedItem)
+                    // console.log(selectedIds,selectedRowKeys,selectedItem)
                 }else{
                     selectedIds.splice(i,1);
                     selectedRowKeys.splice(i,1);

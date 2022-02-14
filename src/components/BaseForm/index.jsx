@@ -16,7 +16,7 @@ export default class FilterForm extends Component {
     reset=()=>{
         this.refs.myForm.resetFields();
     }
-
+    //表单控件
     initFormList=()=>{
         // console.log(this.props.formList);
         const formList=this.props.formList;
@@ -30,6 +30,7 @@ export default class FilterForm extends Component {
                 let width=item.width;
 
                 if(item.type==="时间查询"){
+                    //两个时间控件 ..~..
                     const begin_time=
                     <FormItem label="订单时间" name="begin_time" key={field}>
                         <DatePicker placeholder={placeholder}
@@ -45,13 +46,21 @@ export default class FilterForm extends Component {
                         />
                     </FormItem>
                     formItemList.push(end_time);
-                    
+                }else if(item.type==="DATE"){
+                    //单独一个时间控件
+                    const Date=
+                    <FormItem label={label} name={field} key={field}>
+                        <DatePicker placeholder={placeholder}
+                            showTime={true} format="YYYY-MM-DD"
+                        />
+                    </FormItem>
+                    formItemList.push(Date);
                 }
 
                 if(item.type==="INPUT"){
                     const INPUT=
                     <FormItem label={label} key={field} name={[field]} initialValue={initialValue}>
-                        <Input type="text" placeholder={placeholder} />
+                        <Input type="text" placeholder={placeholder} style={{width:width}} />
                     </FormItem>
                     formItemList.push(INPUT);
                 }
