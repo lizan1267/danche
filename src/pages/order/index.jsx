@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card,Button,Table,Form,Modal, message } from 'antd';
+import { Card,Button,Form,Modal, message } from 'antd';
 import axios from '../../axios';
 import Utils from '../../utils/utils';
 import BaseForm from '../../components/BaseForm';
@@ -194,8 +194,8 @@ export default class Order extends Component {
                         selectedIds={this.state.selectedIds}
                         selectedItem={this.state.selectedItem}
                         pagination={this.state.pagination}
-                        // rowSelection="checkbox"
-                        rowSelection
+                        rowSelection="checkbox"
+                        // rowSelection
                     />
                 </div>
 

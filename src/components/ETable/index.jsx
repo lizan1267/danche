@@ -12,16 +12,17 @@ export default class ETable extends Component {
             let selectedIds=this.props.selectedIds;
             if(selectedIds){
                 const i=selectedIds.indexOf(record.id);
-                // console.log("i",i)
+                console.log("i",i)
                 if(i===-1){
                     selectedIds.push(record.id);
                     selectedRowKeys.push(index);
                     selectedItem.push(record);
-                    // console.log(selectedIds,selectedRowKeys,selectedItem)
+                    console.log(selectedIds,selectedRowKeys,selectedItem)
                 }else{
                     selectedIds.splice(i,1);
                     selectedRowKeys.splice(i,1);
                     selectedItem.splice(i,1);
+                    // console.log(selectedIds,selectedRowKeys,selectedItem)
                 }
             }else{
                 selectedIds=[record.id];
@@ -43,14 +44,15 @@ export default class ETable extends Component {
         let selectedRowKeys=this.props.selectedRowKeys;
         const rowSelection={
             type:"radio",
-            selectedRowKeys
+            selectedRowKeys,
+            // onChange:this.onSelectChange
         }
         if(row_selection===false || row_selection===null){
             row_selection=false;
         }else if(row_selection==="checkbox"){
             rowSelection.type="checkbox";
         }else{
-            rowSelection.type="radio";
+            row_selection="radio";
         }
 
         return <Table

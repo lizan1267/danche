@@ -60,6 +60,7 @@ export default class User extends Component {
     //四个按钮功能区操作
     handleOperate=(type)=>{
         let item=this.state.selectedItem;
+        console.log("selectedItem"+this.state.selectedItem);
         if(type==="create"){
             this.setState({
                 type,
@@ -80,6 +81,7 @@ export default class User extends Component {
                 title:"编辑员工",
                 userInfo:item
             })
+            // console.log("userInfo"+this.state.userInfo)
         }else if(type==="detail"){
             if(!item){
                 Modal.info({
@@ -222,7 +224,6 @@ export default class User extends Component {
                     <Button type="primary" icon={<EditOutlined />} onClick={()=>this.handleOperate("edit")}>编辑员工</Button>
                     <Button type="primary" onClick={()=>this.handleOperate("detail")}>员工详情</Button>
                     <Button type="primary" icon={<DeleteOutlined />}  onClick={()=>this.handleOperate("delete")}>删除员工</Button>
-                    {/* <Button type="primary" style={{marginLeft:10}} onClick={this.handleConfirm}>结束订单</Button> */}
                 </Card>
                 <div className="content-wrap">
                     <ETable 
@@ -257,7 +258,7 @@ export default class User extends Component {
     }
 }
 
-//创建员工
+//员工操作
 class UserForm extends Component {
 
     getState=(state)=>{

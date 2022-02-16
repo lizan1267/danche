@@ -84,10 +84,10 @@ export default class BasicTable extends Component {
     //单击行
     onRowClick=(record,index)=>{
         let selectKey=[index];
-        Modal.info({
-            title:"信息",
-            title:`用户名:${record.userName}，用户爱好:${record.interest}`
-        })
+        // Modal.info({
+        //     title:"信息",
+        //     title:`用户名:${record.userName}，用户爱好:${record.interest}`
+        // })
         this.setState({
             selectedRowKeys:selectKey,
             selectedItem:record
@@ -231,7 +231,7 @@ export default class BasicTable extends Component {
                                 this.onRowClick(record,index)
                               }
                             };
-                          }}
+                        }}
                         pagination={false}
                         columns={columns}
                         dataSource={this.state.dataSource2} 

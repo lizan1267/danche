@@ -45,6 +45,7 @@ export default{
                 selectedItem,  //选中的那一行
                 selectedIds
             })
+            console.log("u"+selectedIds,selectedRowKeys,selectedItem)
         }else{
             this.setState({
                 selectedRowKeys,
