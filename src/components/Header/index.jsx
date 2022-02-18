@@ -2,10 +2,11 @@ import { Col, Row } from 'antd';
 import React, { Component } from 'react';
 import './index.less';
 import Util from '../../utils/utils';
+import { connect } from 'react-redux';
 import axios from 'axios'; //引入第三方包的
 
-export default class Header extends Component {
-    // state={}
+class Header extends Component {
+    state={}
     componentWillMount(){
         //用户信息
         this.setState({
@@ -56,7 +57,7 @@ export default class Header extends Component {
                     menuType?"":
                     <Row className='breadcrumb'>
                         <Col span="4" className='breadcrumb-title'>
-                            首页
+                            {this.props.menuName}
                         </Col>
                         <Col span="20" className='weather'>
                             <span className='date'>{this.state.sysTime}</span>
@@ -69,3 +70,11 @@ export default class Header extends Component {
         )
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        menuName: state.menuName
+    }
+}
+
+export default connect(mapStateToProps)(Header);

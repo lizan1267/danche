@@ -171,7 +171,8 @@ export default class PermissionUser extends Component {
                 dataIndex:"role_name"
             },{
                 title:"创建时间",
-                dataIndex:"create_time"
+                dataIndex:"create_time",
+                render:Utils.formateDate
             },{
                 title:"使用状态",
                 dataIndex:"status",

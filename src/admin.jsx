@@ -7,6 +7,7 @@ import './style/common.less';
 // import Home from './pages/home';
 
 export default class Admin extends Component {
+    
     render() {
         return (
             <Row className='container'>

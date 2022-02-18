@@ -42,8 +42,8 @@ export default class IRouter extends Component {
                             </Common>
                             } 
                         />
-                        <Route path="/" render={()=>
-                            <Admin>
+                        <Route path="/" render={(props)=>
+                            <Admin {...props}>
                                 <Switch>
                                     <Route path="/home" component={Home} />
                                     <Route path="/ui/buttons" component={Buttons} />
